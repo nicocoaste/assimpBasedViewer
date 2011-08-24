@@ -21,13 +21,49 @@
 
 #include "assimpBasedViewer/assimpBasedViewer.h"
 
-int main (int argc, char *argv[]) {
+CassimpBasedViewer *global_pointer;
 
-    const struct aiScene* ai_scene = aiImportFile("/home/perrin/Desktop/blenderStuff/cube.3ds",aiProcessPreset_TargetRealtime_Quality);
+void display(void) {
+    if (global_pointer) {
+	global_pointer->display();
+    }    
+}
+
+void reshape(int width, int height) {
+    if (global_pointer) {
+	global_pointer->reshape(width, height);
+    }   
+}
+
+void MouseCB(int _b, int _s, int _x, int _y) {
+   if (global_pointer) {
+	global_pointer->MouseCB(_b,_s,_x,_y);
+    }       
+}
+
+void MotionCB(int _x, int _y) {
+    if (global_pointer) {
+	global_pointer->MotionCB(_x,_y);
+    }        
+}
+
+int main (int argc, char *argv[]) {
     
     CassimpBasedViewer aBViewer;
+    global_pointer = &aBViewer;
+    
+    glutCreateWindow("assimpBasedViewer");
+    
+    glutDisplayFunc(display);
+    glutReshapeFunc(reshape);
+    glutMouseFunc(MouseCB);
+    glutMotionFunc(MotionCB);
+
+    const struct aiScene* ai_scene = aiImportFile("../../unitTesting/cube.3ds",aiProcessPreset_TargetRealtime_Quality);
     
     aBViewer.addObject(ai_scene, "cube");
+    
+    aBViewer.loop();
     
     return 0;
 
