@@ -28,8 +28,8 @@ MESSAGE(STATUS " unitTesting: ${UNITTESTING_CXXFLAGS}")
 ADD_EXECUTABLE( unit.out unit.cpp)
 SET_TARGET_PROPERTIES( unit.out	              
 		      PROPERTIES
-	              COMPILE_FLAGS ${${PROJECT_NAME}_test_CXXFLAGS}		      
-          	      LINK_FLAGS "${${PROJECT_NAME}_test_LDFLAGS}"
+	              COMPILE_FLAGS "-lpthread ${${PROJECT_NAME}_test_CXXFLAGS}"
+          	      LINK_FLAGS "-lpthread ${${PROJECT_NAME}_test_LDFLAGS}"
 )
 TARGET_LINK_LIBRARIES(unit.out ${PROJECT_NAME})
 TARGET_LINK_LIBRARIES(unit.out assimp)
