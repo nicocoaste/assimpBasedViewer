@@ -19,6 +19,21 @@
 *
 */
 
+/*
+ * This unit test shows how the library must be used. A global pointer towards the class must be created (here: global_pointer).
+ * Then, in order to use members of CassimpBasedViewer as functions for GLUT, we create five global functions that respectively call the 
+ * following members of global_pointer: 
+ *             display, reshape, MouseCB, MotionCB and loop
+ * Then we must create two thread functions.
+ * The first function will correspond to the display: it calls the function loop()
+ * The second thread is the rest of the program: the assimp elements can be modified, and in real-time, the modifications will appear in the viewer.
+ * Finally, in main(), we create an object 'aBViewer' of the class CassimpBasedViewer, and we set:
+ *             global_pointer = &aBViewer;
+ * Before launching the threads, it is better to add a first assimp object to the aBViewer, so that initial dimensions of the window can be computed.
+ * But this might become unnecessary in future versions. 
+ * 
+ */
+
 #include "assimpBasedViewer/assimpBasedViewer.h"
 #include <sys/time.h>
 #include <pthread.h>
