@@ -31,7 +31,7 @@ SET(PROJECT_CONTACT )
 SET(PROJECT_DESCRIPTION "")
 project(${PROJECT_NAME})
 
-SET(CMAKE_INSTALL_PREFIX "./build/")
+# SET(CMAKE_INSTALL_PREFIX "./build/")
 
 # Impose shared libraries
 #------------------------

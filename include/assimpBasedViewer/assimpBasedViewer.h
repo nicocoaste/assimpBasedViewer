@@ -24,12 +24,12 @@
 #define ASSIMPBASEDVIEWER_H
 
 #include <iostream>
+#include <string>
 #include <set>
 // #include <iomanip>
 // #include <sstream>
 // #include <fstream>
 // #include <vector>
-// #include <string>
 
 // #include <stdio.h>
 
@@ -42,9 +42,11 @@
 
 using namespace std;
 
+typedef string aBVid;
+
 struct aBVobject {
     const struct aiScene * object;
-    const char * id;    
+    aBVid id;    
 };
 
 bool operator < (const aBVobject& o1,const aBVobject& o2) {
@@ -76,13 +78,13 @@ class CassimpBasedViewer
 		 * Adds an object (aiScene) to the set of objects (the private member assimpObjects), and gives it the unique identifier (a char array) defined by the user (obj_id). 
 		 * If the identifier already exists for some object of assimpObjects, nothing is done.
 		 */
-		int addObject( const struct aiScene * obj_ptr, const char * obj_id); //returns 1 if an object was actually added (new id), 0 otherwise
+		int addObject( const struct aiScene * obj_ptr, aBVid obj_id); //returns 1 if an object was actually added (new id), 0 otherwise
 
 		/*!
 		 * Removes the object of assimpObjects whose identifier is obj_id.
 		 * If this identifier is not found, nothing is done.
 		 */
-		int eraseObject(const char * obj_id); //returns 1 if an object was actually removed (id found), 0 otherwise
+		int eraseObject(aBVid obj_id); //returns 1 if an object was actually removed (id found), 0 otherwise
 		
 		void MouseCB(int _b, int _s, int _x, int _y)
 		{
