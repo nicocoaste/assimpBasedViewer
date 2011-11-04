@@ -38,6 +38,11 @@
 #include <sys/time.h>
 #include <pthread.h>
 
+#define OBJECT_TO_DISPLAY "/home/perrin/Desktop/ROBOT_DATA/DLR_HUMANOID/3DS_LWO_DAE/box.dae"
+// #define OBJECT_TO_DISPLAY "/home/perrin/Desktop/ROBOT_DATA/CoMan/SteeveLinks/Wavefronts/pelvis_and_waist.obj"
+// #define OBJECT_TO_DISPLAY "/home/perrin/Desktop/ROBOT_DATA/CoMan/SteeveLinks/Wavefronts/hip_and_thigh_right.obj"
+// #define OBJECT_TO_DISPLAY "/home/perrin/Desktop/ROBOT_DATA/CoMan/SteeveLinks/Wavefronts/shin_right.obj"
+
 CassimpBasedViewer *global_pointer;
 
 int64_t ts_now (void) {
@@ -93,10 +98,11 @@ void *thread_1(void *ptr) {
 
 void *thread_2(void *ptr) {
     
-    const struct aiScene* ai_scene2 = aiImportFile("../../unitTesting/cube.3ds",aiProcessPreset_TargetRealtime_Quality);
+//     const struct aiScene* ai_scene2 = aiImportFile("../../unitTesting/cube.3ds",aiProcessPreset_TargetRealtime_Quality);
+    const struct aiScene* ai_scene2 = aiImportFile(OBJECT_TO_DISPLAY,aiProcessPreset_TargetRealtime_Quality);
     
     if (global_pointer) {
-	global_pointer->addObject(ai_scene2, "cube2");
+// 	global_pointer->addObject(ai_scene2, "cube2");
     }
     
     int64_t time_start = ts_now();
@@ -116,7 +122,7 @@ int main (int argc, char *argv[]) {
     CassimpBasedViewer aBViewer;
     global_pointer = &aBViewer;
 
-    const struct aiScene* ai_scene = aiImportFile("../../unitTesting/cube.3ds",aiProcessPreset_TargetRealtime_Quality);
+    const struct aiScene* ai_scene = aiImportFile(OBJECT_TO_DISPLAY,aiProcessPreset_TargetRealtime_Quality);
     
     aBViewer.addObject(ai_scene, "cube");
     

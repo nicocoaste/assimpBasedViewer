@@ -300,10 +300,18 @@ void CassimpBasedViewer::display(void)
 	
 	// rotate it around the y axis
 // 	glRotatef(angle,0.f,1.f,0.f);
+	
+	
+	
 	glTranslatef(azim2+dazim2, -elev2-delev2, 0.0);
+// 	glTranslatef(azim2+dazim2, 0.0, 0.0);
 	glTranslatef(0.0, 0.0, -(dis+ddis));
-	glRotated(elev+delev, 1.0, 0.0, 0.0);
 	glRotated(azim+dazim, 0.0, 1.0, 0.0);
+	glRotated(elev+delev, 1.0, 0.0, 0.0);
+	glRotated(dis2+ddis2, 0.0, 0.0, 1.0);
+	
+	
+	
 // 	glRotated(elev2+delev2, 1.0, 0.0, 0.0);
 // 	glRotated(azim2+dazim2, 0.0, 0.0, 1.0);
 	

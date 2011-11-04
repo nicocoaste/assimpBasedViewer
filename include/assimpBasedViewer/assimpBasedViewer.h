@@ -91,11 +91,13 @@ class CassimpBasedViewer
 		    if (_s == GLUT_UP)
 		    {
 			dis += ddis;
+			dis2 += ddis2;
 			azim += dazim;
 			elev += delev;
 			azim2 += dazim2;
 			elev2 += delev2;
 			ddis = 0.0;
+			ddis2 = 0.0;
 			dazim = 0.0;
 			delev = 0.0;
 			dazim2 = 0.0;
@@ -128,7 +130,9 @@ class CassimpBasedViewer
 		{
 		    if (mode == 0)
 		    {
-			ddis = dis * ((_y - beginy)/100.0 - (_x - beginx)/100.0); //these are parameters for glTranslate
+// 			ddis = dis * ((_y - beginy)/100.0 - (_x - beginx)/100.0); //these are parameters for glTranslate (zoom)
+			ddis = dis * (_y - beginy)/100.0;
+			ddis2 = (_x - beginx)/2.5;
 		    }
 		    else if(mode == 1)
 		    {
@@ -162,8 +166,8 @@ class CassimpBasedViewer
 		
 		int mode;
 		float beginx, beginy;
-		float dis, azim, azim2, elev, elev2;
-		float ddis, dazim, dazim2, delev, delev2;
+		float dis, dis2, azim, azim2, elev, elev2;
+		float ddis, ddis2, dazim, dazim2, delev, delev2;
 		struct aiVector3D ai_environment_min, ai_environment_max, ai_environment_center;
 
 		void get_bounding_box_for_node (const struct aiScene* ai_scene, const struct aiNode* nd, struct aiVector3D* min, struct aiVector3D* max, struct aiMatrix4x4* trafo);
