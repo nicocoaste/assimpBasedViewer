@@ -128,18 +128,18 @@ class CassimpBasedViewer
 		    
 		void MotionCB(int _x, int _y)
 		{
-		    if (mode == 0)
+		    if (mode == 0) //Middle click
 		    {
 // 			ddis = dis * ((_y - beginy)/100.0 - (_x - beginx)/100.0); //these are parameters for glTranslate (zoom)
 			ddis = dis * (_y - beginy)/100.0;
 			ddis2 = (_x - beginx)/2.5;
 		    }
-		    else if(mode == 1)
+		    else if(mode == 1) //Right click
 		    {
 			dazim = (_x - beginx)/2.5; //these are parameters for glRotate
 			delev = (_y - beginy)/2.5; //these are parameters for glRotate     
 		    }
-		    else if(mode == 2)
+		    else if(mode == 2) //Left click
 		    {
 			dazim2 = (_x - beginx)/105.5; //these are parameters for glTranslate
 			delev2 = (_y - beginy)/105.5; //these are parameters for glTranslate     

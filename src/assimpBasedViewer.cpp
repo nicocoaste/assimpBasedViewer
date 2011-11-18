@@ -29,7 +29,7 @@ CassimpBasedViewer::CassimpBasedViewer() {
 	dis = 10.0; azim = 0.0; azim2 = 0.0; elev = 0.0; elev2 = 0.0;
 	ddis = 0.0; dazim = 0.0; dazim2 = 0.0; delev = 0.0; delev2 = 0.0;
 	
-	glutInitWindowSize(900,600);
+	glutInitWindowSize(600,600);
 	glutInitWindowPosition(100,100);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 	int u = 0;
@@ -90,9 +90,6 @@ void CassimpBasedViewer::loop() {
 	ai_environment_center.y = (ai_environment_min.y + ai_environment_max.y) / 2.0f;
 	ai_environment_center.z = (ai_environment_min.z + ai_environment_max.z) / 2.0f;
 	
-// 	while(1) {
-// 		display();
-// 	}
 	glutMainLoop();
     }
 }
@@ -295,35 +292,35 @@ void CassimpBasedViewer::display(void)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	
-	gluLookAt(0.f,0.f,3.f,0.f,0.f,-5.f,0.f,-1.f,0.f);
-	
-	// rotate it around the y axis
-// 	glRotatef(angle,0.f,1.f,0.f);
-	
-	
+
+// 	gluLookAt(0.f,0.f,3.f,0.f,0.f,-5.f,0.f,-1.f,0.f);
+// 	gluLookAt( ai_environment_center.x, ai_environment_center.y + 3.0f, ai_environment_center.z, ai_environment_center.x, ai_environment_center.y, ai_environment_center.z, 0.f,0.f,1.f);
+
+	gluLookAt( 0.f, 14.f, 0.f, 0.f, 0.f, 0.f, 0.f,0.f,1.f);
 	
 	glTranslatef(azim2+dazim2, -elev2-delev2, 0.0);
-// 	glTranslatef(azim2+dazim2, 0.0, 0.0);
-	glTranslatef(0.0, 0.0, -(dis+ddis));
+	glTranslatef(0.0, 0.0, (dis+ddis));
 	glRotated(azim+dazim, 0.0, 1.0, 0.0);
 	glRotated(elev+delev, 1.0, 0.0, 0.0);
 	glRotated(dis2+ddis2, 0.0, 0.0, 1.0);
 	
+// 	glTranslatef(azim2+dazim2, -elev2-delev2, 0.0);
+// 	glTranslatef(0.0, 0.0, -(dis+ddis));
+// 	glRotated(azim+dazim, 0.0, 1.0, 0.0);
+// 	glRotated(elev+delev, 1.0, 0.0, 0.0);
+// 	glRotated(dis2+ddis2, 0.0, 0.0, 1.0);
 	
-	
-// 	glRotated(elev2+delev2, 1.0, 0.0, 0.0);
-// 	glRotated(azim2+dazim2, 0.0, 0.0, 1.0);
-	
-	// scale the whole asset to fit into our view frustum 
-	tmp = ai_environment_max.x-ai_environment_min.x;
-	tmp = aisgl_max(ai_environment_max.y - ai_environment_min.y,tmp);
-	tmp = aisgl_max(ai_environment_max.z - ai_environment_min.z,tmp);
-	tmp = 1.f / tmp;
-	glScalef(tmp, tmp, tmp);
+		// scale the whole asset to fit into our view frustum 
+		//(BEFORE THIS PART OF THE CODE WAS AFTER THE TRANSLATIONS AND ROTATIONS
+// 	tmp = ai_environment_max.x-ai_environment_min.x;
+// 	tmp = aisgl_max(ai_environment_max.y - ai_environment_min.y,tmp);
+// 	tmp = aisgl_max(ai_environment_max.z - ai_environment_min.z,tmp);
+// 	tmp = 1.f / tmp;
+// 	glScalef(tmp, tmp, tmp);
 
         // center the model
-	glTranslatef( -ai_environment_center.x, -ai_environment_center.y, -ai_environment_center.z );
+// 	glTranslatef( -ai_environment_center.x, -ai_environment_center.y, -ai_environment_center.z );
+	
 	
 	GLuint scene_list = 0;
 	if(scene_list == 0) {
