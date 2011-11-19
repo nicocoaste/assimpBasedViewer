@@ -102,6 +102,7 @@ class CassimpBasedViewer
 			delev = 0.0;
 			dazim2 = 0.0;
 			delev2 = 0.0;
+			vectRef = vectRef + vectRefdelta;
 			return;
 		    }
 
@@ -163,7 +164,7 @@ class CassimpBasedViewer
 	    
 		set<struct aBVobject> assimpObjects;
 		
-		
+		aiVector3D vectRef, vectRefdelta;
 		int mode;
 		float beginx, beginy;
 		float dis, dis2, azim, azim2, elev, elev2;

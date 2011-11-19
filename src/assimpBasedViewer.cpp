@@ -26,6 +26,7 @@
 #define aisgl_max(x,y) (y>x?y:x)
 
 CassimpBasedViewer::CassimpBasedViewer() {  
+	vectRef.Set(0.f,0.f,0.f);
 	dis = 10.0; azim = 0.0; azim2 = 0.0; elev = 0.0; elev2 = 0.0;
 	ddis = 0.0; dazim = 0.0; dazim2 = 0.0; delev = 0.0; delev2 = 0.0;
 	
@@ -36,7 +37,7 @@ CassimpBasedViewer::CassimpBasedViewer() {
 	glutInit(&u, NULL);
 }
 
-CassimpBasedViewer::~CassimpBasedViewer() {  
+CassimpBasedViewer::~CassimpBasedViewer() { 
 }
 
 int CassimpBasedViewer::addObject( const struct aiScene * obj_ptr, aBVid obj_id) {
@@ -296,13 +297,41 @@ void CassimpBasedViewer::display(void)
 // 	gluLookAt(0.f,0.f,3.f,0.f,0.f,-5.f,0.f,-1.f,0.f);
 // 	gluLookAt( ai_environment_center.x, ai_environment_center.y + 3.0f, ai_environment_center.z, ai_environment_center.x, ai_environment_center.y, ai_environment_center.z, 0.f,0.f,1.f);
 
-	gluLookAt( 0.f, 14.f, 0.f, 0.f, 0.f, 0.f, 0.f,0.f,1.f);
 	
-	glTranslatef(azim2+dazim2, -elev2-delev2, 0.0);
-	glTranslatef(0.0, 0.0, (dis+ddis));
-	glRotated(azim+dazim, 0.0, 1.0, 0.0);
-	glRotated(elev+delev, 1.0, 0.0, 0.0);
-	glRotated(dis2+ddis2, 0.0, 0.0, 1.0);
+	aiMatrix4x4 matrR_Z;
+	aiMatrix4x4 matrR_Y;
+	aiMatrix4x4 matrR_X;
+	aiVector3D vect(0.f, dis+ddis, 0.f);
+	aiVector3D vectUP(0.f, 0.f, 1.f);
+	vectRefdelta.Set(dazim2, 0.f, delev2);
+	aiMatrix4x4::RotationX(-(azim+dazim)*3.1415926/180.0, matrR_Z);	
+	aiMatrix4x4::RotationY((elev+delev)*3.1415926/180.0, matrR_Y);
+	aiMatrix4x4::RotationZ(-(dis2+ddis2)*3.1415926/180.0, matrR_X);
+	aiMatrix4x4 matrR4 = matrR_Z * matrR_Y * matrR_X;
+	aiMatrix3x3 matrR3(matrR4);
+	aiTransformVecByMatrix3(&vect, &matrR3);
+	aiTransformVecByMatrix3(&vectUP, &matrR3);	
+	aiTransformVecByMatrix3(&vectRefdelta, &matrR3);
+	aiVector3D vecttmp = vectRef + vectRefdelta;
+	
+	gluLookAt(
+	  vecttmp[0] + vect[0],
+	  vecttmp[1] + vect[1],
+	  vecttmp[2] + vect[2],
+	  vecttmp[0],
+	  vecttmp[1],
+	  vecttmp[2],
+	  vectUP[0],
+	  vectUP[1],
+	  vectUP[2]);
+	
+// 	gluLookAt( 0.f, 24.f, 0.f, 0.f, 0.f, 0.f, 0.f,0.f,1.f);
+// 	
+// 	glTranslatef(azim2+dazim2, -elev2-delev2, 0.0);
+// 	glTranslatef(0.0, 0.0, (dis+ddis));
+// 	glRotated(azim+dazim, 0.0, 1.0, 0.0);
+// 	glRotated(elev+delev, 1.0, 0.0, 0.0);
+// 	glRotated(dis2+ddis2, 0.0, 0.0, 1.0);
 	
 // 	glTranslatef(azim2+dazim2, -elev2-delev2, 0.0);
 // 	glTranslatef(0.0, 0.0, -(dis+ddis));
